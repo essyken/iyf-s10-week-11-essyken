@@ -33,6 +33,16 @@ const postSchema = new mongoose.Schema({
     timestamps: true
 });
 
+// Virtual populate for comments
+postSchema.virtual('commentList', {
+    ref: 'Comment',
+    localField: '_id',
+    foreignField: 'post'
+});
+
+// Enable virtuals in JSON
+postSchema.set('toJSON', { virtuals: true });
+
 postSchema.index({ title: 'text', content: 'text' });
 
 postSchema.methods.like = function() {
