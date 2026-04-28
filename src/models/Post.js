@@ -14,8 +14,9 @@ const postSchema = new mongoose.Schema({
         minlength: [10, 'Content must be at least 10 characters']
     },
     author: {
-        type: String,
-        required: [true, 'Author is required']
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     likes: {
         type: Number,
@@ -40,7 +41,6 @@ postSchema.virtual('commentList', {
     foreignField: 'post'
 });
 
-// Enable virtuals in JSON
 postSchema.set('toJSON', { virtuals: true });
 
 postSchema.index({ title: 'text', content: 'text' });
